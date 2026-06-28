@@ -12,14 +12,23 @@ public class PlayerHealth : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI livesText;
 
-    private Vector3 respawnPosition;
     private bool isInvulnerable = false;
     private SpriteRenderer spriteRenderer;
+    private Color originalColor;
+
+    public bool IsInvulnerable
+    {
+        get { return isInvulnerable; }
+    }
 
     void Start()
     {
-        respawnPosition = transform.position;
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (spriteRenderer != null)
+        {
+            originalColor = spriteRenderer.color;
+        }
 
         UpdateLivesUI();
     }
@@ -43,13 +52,7 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
 
-        RespawnPlayer();
         StartCoroutine(TemporaryInvulnerability());
-    }
-
-    void RespawnPlayer()
-    {
-        transform.position = respawnPosition;
     }
 
     IEnumerator TemporaryInvulnerability()
@@ -65,7 +68,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (spriteRenderer != null)
         {
-            spriteRenderer.color = Color.blue;
+            spriteRenderer.color = originalColor;
         }
 
         isInvulnerable = false;

@@ -1,8 +1,12 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelGoal : MonoBehaviour
 {
     public static LevelGoal Instance;
+
+    [Header("Level Progression")]
+    public string nextSceneName;
 
     private int totalCrystals;
     private int collectedCrystals;
@@ -28,7 +32,8 @@ public class LevelGoal : MonoBehaviour
 
         if (collectedCrystals >= totalCrystals)
         {
-            Debug.Log("LEVEL COMPLETE! All crystals collected.");
+            Debug.Log("LEVEL COMPLETE! Loading next scene: " + nextSceneName);
+            SceneManager.LoadScene(nextSceneName);
         }
     }
 }
