@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -67,9 +66,12 @@ public class EnemyMovement : MonoBehaviour
         {
             if (hit.CompareTag("Player"))
             {
-                Debug.Log("Enemy touched player! Restarting level.");
+                PlayerHealth playerHealth = hit.GetComponent<PlayerHealth>();
 
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                if (playerHealth != null)
+                {
+                    playerHealth.TakeDamage();
+                }
             }
         }
     }

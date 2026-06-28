@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ExplosionTile : MonoBehaviour
 {
@@ -37,8 +36,12 @@ public class ExplosionTile : MonoBehaviour
             }
             else if (hit.CompareTag("Player"))
             {
-                Debug.Log("Player hit by explosion! Restarting level.");
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                PlayerHealth playerHealth = hit.GetComponent<PlayerHealth>();
+
+                if (playerHealth != null)
+                {
+                    playerHealth.TakeDamage();
+                }
             }
         }
     }

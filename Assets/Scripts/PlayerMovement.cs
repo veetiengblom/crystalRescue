@@ -51,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.position = targetPosition;
             CollectCrystalAtCurrentPosition();
+            CheckEnemyAtCurrentPosition();
         }
     }
 
@@ -69,6 +70,23 @@ public class PlayerMovement : MonoBehaviour
                 if (LevelGoal.Instance != null)
                 {
                     LevelGoal.Instance.CollectCrystal();
+                }
+            }
+        }
+    }
+    void CheckEnemyAtCurrentPosition()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 0.25f);
+
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.CompareTag("Enemy"))
+            {
+                PlayerHealth playerHealth = GetComponent<PlayerHealth>();
+
+                if (playerHealth != null)
+                {
+                    playerHealth.TakeDamage();
                 }
             }
         }
